@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>User Registration</h2>
+        <form method="post" class="mt-4">
+            <!-- CSRF Token for Django -->
+            {% csrf_token %}
+         
+           
+            {% if messages %}
+            {{ message.tags }}
+             <div class="alert alert-primary" role="alert">
+                {% for message in messages %}
+           <p> {{message}}</p>
+             {% endfor %}
+              </div>
+{% endif %}
+            <!-- Name Field -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="namee" placeholder="Enter your name" required>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="emailUser" placeholder="Enter your email" required>
+            </div>
+
+            <!-- Address Field -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea class="form-control" id="address" name="addressUser" rows="3" placeholder="Enter your address" required></textarea>
+                <button type="button" onclick="addAddressField()">Add Another Address</button>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="passwordUser" placeholder="Enter your password" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary" onclick>Register</button>
+            {% if messages %}
+            {{ message.tags }}
+             <div class="alert alert-primary" role="alert">
+                {% for message in messages %}
+           <p> {{message}}</p>
+             {% endfor %}
+              </div>
+{% endif %}
+
+
+        </form>
+
+
+        <script>
+            function addAddressField() {
+                var field = document.createElement('textarea');
+                field.name = 'addressUser';
+                document.querySelector('form').insertBefore(field, document.querySelector('button[type="submit"]'));
+            }
+        </script>
+
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
