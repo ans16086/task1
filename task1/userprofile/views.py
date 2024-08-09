@@ -16,32 +16,37 @@ def  regist(request):
         email=data.get('emailUser')
         address=data.getlist('addressUser')
         password=data.get('passwordUser')
-
-        user =User.objects.create(
-            username=nameUser,
-            email=email,
+        sameuser=User.objects.filter(username=nameUser)
+        if sameuser:
+            messages.info(request, "same user")
+        else:
+            print(sameuser)
+            user =User.objects.create(
+                username=nameUser,
+                email=email,
+                
+            )
             
-           )
-        
-        user.set_password(password)
-        user.save()
+            user.set_password(password)
+            user.save()
 
-        deletebutton.objects.create(
-            user=user,
-             )
-        
+            deletebutton.objects.create(
+                user=user,
+                )
+            
 
 
-        for addr in address:
-             userprofilee.objects.create(
-             user=user,
-             addressUser=addr
-             )
-        for addr in address:
-             print(addr)
+            for addr in address:
+                userprofilee.objects.create(
+                user=user,
+                addressUser=addr
+                )
+            for addr in address:
+                print(addr)
 
 
-        messages.info(request, "login done")
+            messages.info(request, "login done")
+            return redirect('loginn')
        
     return render(request,'regist.html')
     
