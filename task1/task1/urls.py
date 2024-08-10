@@ -24,4 +24,5 @@ urlpatterns = [
     path('profile/',profile,name='profile' ),
     path('delete/<id>/',deletereq,name='delete' ),
     path('profile/delete/<id>/',deletereq,name='delete' ),
+    path('profile/logout/',log_out,name='delete' ),
 ]
