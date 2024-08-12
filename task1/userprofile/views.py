@@ -5,10 +5,15 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
-
+@csrf_exempt
 def  regist(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
     if request.method=='POST':
+        if request.user.is_authenticated:
+            return redirect('profile')
         data= request.POST
         print(data)
     
@@ -45,13 +50,15 @@ def  regist(request):
                 print(addr)
 
 
-            messages.info(request, "login done")
+            messages.info(request, "registeration done")
             return redirect('loginn')
        
     return render(request,'regist.html')
-    
+  
+@csrf_exempt  
 @login_required(login_url='loginn')
 def profile(request):
+    
 
     user = request.user
     print(request.user)
@@ -72,12 +79,10 @@ def profile(request):
 
     return render(request, 'profilee.html', context)
      
-
-
-
-
-
+@csrf_exempt
 def loginn(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
 
     if request.method=='POST':
             data= request.POST
@@ -121,9 +126,7 @@ def loginn(request):
 
 
     return render(request,'login.html')
-
-
-
+@csrf_exempt
 @login_required(login_url='loginn')
 def deletereq(request,id):
     deel = User.objects.get(id=id)
@@ -131,10 +134,11 @@ def deletereq(request,id):
     userdel.deleteq = True
     
     
+    
     userdel.save()
     print(userdel)
+    logout(request)
     return redirect('loginn')
-
 
 def log_out(request):
     logout(request)
